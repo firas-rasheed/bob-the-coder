@@ -78,3 +78,5 @@ console.log(tips)
 // } else {
 //     return bill * 0.2
 // }
+
+// hello lorem //
