@@ -80,3 +80,30 @@ console.log(tips)
 // }
 
 // hello lorem //
+
+
+
+// objects
+
+const array = [
+    `firas`,
+    `rasheed`,
+    2000 - 2023,
+    `student`
+    [`firas`, `rasheed`, `hello`]
+];
+
+const array2 = {
+    firstName: `firas`,
+    lastName: `rasheed`,
+    age: 2000 - 2023,
+    occupation: `student`,
+    friends: [`firas`, `rasheed`, `hello`]
+};
+
+// object literal syntax of objects
+
+console.log(array2);
+
+
+
