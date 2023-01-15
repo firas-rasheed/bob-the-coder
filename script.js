@@ -1,47 +1,47 @@
 'use strict'
 
 
-// function fruitProcessor(apples, oranges) {
-//     const juice = `juice with ${apples} apples and ${oranges} oranges`;
-//     return juice;
-// }
+function fruitProcessor(apples, oranges) {
+    const juice = `juice with ${apples} apples and ${oranges} oranges`;
+    return juice;
+}
 
 
-// console.log(fruitProcessor(5, 0));
+console.log(fruitProcessor(5, 0));
 
 
-// function calcAge1(birthYear) {
-//     return 2037 - birthYear;
-// }
+function calcAge1(birthYear) {
+    return 2037 - birthYear;
+}
 
-// const age1 = calcAge1(1991);
-
-
-// const calcAge2 = function(birhtYear) {
-//     return 2037 - birhtYear;
-// }
+const age1 = calcAge1(1991);
 
 
-// const calcAge3 = birthYear => 2037 - birthYear;
-
-// console.log(calcAge3(1857));
-
-
-
-// function cutFruitPieces(fruit) {
-//     return fruit * 4;
-// }
+const calcAge2 = function(birhtYear) {
+    return 2037 - birhtYear;
+}
 
 
-// function fruitProcessor(apples, oranges) {
-//     const applePieces = cutFruitPieces(apples)
-//     const orangePieces = cutFruitPieces(oranges)
+const calcAge3 = birthYear => 2037 - birthYear;
 
-//     const juice = `juice with ${applePieces} apples and ${orangePieces} oranges.`;
-//     return juice;
-// }
+console.log(calcAge3(1857));
 
-// console.log(fruitProcessor(2, 3));
+
+
+function cutFruitPieces(fruit) {
+    return fruit * 4;
+}
+
+
+function fruitProcessor(apples, oranges) {
+    const applePieces = cutFruitPieces(apples)
+    const orangePieces = cutFruitPieces(oranges)
+
+    const juice = `juice with ${applePieces} apples and ${orangePieces} oranges.`;
+    return juice;
+}
+
+console.log(fruitProcessor(2, 3));
 
 
 
@@ -50,12 +50,12 @@
 
 
 
-// const friends = [`firas`, `aamer`, `ameen`, `rehan`];
+const friends = [`firas`, `aamer`, `ameen`, `rehan`];
 
-// friends.push(`ahmed`);
+friends.push(`ahmed`);
 
-// friends.unshift(`rasheed`);
-// console.log(friends)
+friends.unshift(`rasheed`);
+console.log(friends)
 
 
 
@@ -71,13 +71,13 @@ console.log(tips)
 
 
 
-// if (bill <= 300) {
-//     return bill * 0.15
-// } else if (bill >= 50) {
-//     return bill * 0.15
-// } else {
-//     return bill * 0.2
-// }
+if (bill <= 300) {
+    return bill * 0.15
+} else if (bill >= 50) {
+    return bill * 0.15
+} else {
+    return bill * 0.2
+}
 
 // hello lorem //
 
