@@ -1,109 +1,101 @@
-'use strict'
+'use strict';
 
+// Data needed for a later exercise
+const flights =
+    '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
-function fruitProcessor(apples, oranges) {
-    const juice = `juice with ${apples} apples and ${oranges} oranges`;
-    return juice;
-}
+// Data needed for first part of the section
+const restaurant = {
+        name: 'Classico Italiano',
+        location: 'Via Angelo Tavanti 23, Firenze, Italy',
+        categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+        starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+        mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
+        order: function(starterIndex, mainIndex) {
+            return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]]
+        },
 
-console.log(fruitProcessor(5, 0));
+        openingHours: {
+            thu: {
+                open: 12,
+                close: 22,
+            },
+            fri: {
+                open: 11,
+                close: 23,
+            },
+            sat: {
+                open: 0, // Open 24 hours
+                close: 24,
+            },
+        },
+        orderDelivery: function(starterIndex, mainIndex, time, address) {
+                console.log(`order recieved! ${this.starterMenu[starterIndex]`} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time});
+    },
 
-
-function calcAge1(birthYear) {
-    return 2037 - birthYear;
-}
-
-const age1 = calcAge1(1991);
-
-
-const calcAge2 = function(birhtYear) {
-    return 2037 - birhtYear;
-}
-
-
-const calcAge3 = birthYear => 2037 - birthYear;
-
-console.log(calcAge3(1857));
-
-
-
-function cutFruitPieces(fruit) {
-    return fruit * 4;
-}
-
-
-function fruitProcessor(apples, oranges) {
-    const applePieces = cutFruitPieces(apples)
-    const orangePieces = cutFruitPieces(oranges)
-
-    const juice = `juice with ${applePieces} apples and ${orangePieces} oranges.`;
-    return juice;
-}
-
-console.log(fruitProcessor(2, 3));
-
-
-
-
-// 
-
-
-
-const friends = [`firas`, `aamer`, `ameen`, `rehan`];
-
-friends.push(`ahmed`);
-
-friends.unshift(`rasheed`);
-console.log(friends)
-
-
-
-function caclcTip(bill) {
-    return bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2
-}
-
-const bills = [125, 555, 44];
-const tips = [caclcTip(bills[0]) + bills[0], caclcTip(bills[1]) + bills[1], caclcTip(bills[2]) + bills[2]]
-
-
-console.log(tips)
-
-
-
-if (bill <= 300) {
-    return bill * 0.15
-} else if (bill >= 50) {
-    return bill * 0.15
-} else {
-    return bill * 0.2
-}
-
-// hello lorem //
-
-
-
-// objects
-
-const array = [
-    `firas`,
-    `rasheed`,
-    2000 - 2023,
-    `student`
-    [`firas`, `rasheed`, `hello`]
-];
-
-const array2 = {
-    firstName: `firas`,
-    lastName: `rasheed`,
-    age: 2000 - 2023,
-    occupation: `student`,
-    friends: [`firas`, `rasheed`, `hello`]
 };
+restaurant.orderDelivery({
+    time: `22: 30`,
+    address: `via del sole, 21`,
+    mainIndex: 2,
+    starterIndex: 2,
+})
 
-// object literal syntax of objects
+const { name1, openingHours, categories } = restaurant
+console.log(name, openingHours, categories);
 
-console.log(array2);
+const {
+    name: restaurantName,
+    openingHours: hours,
+    categories: tags
+} = restaurant
 
+console.log(restaurantName, hours, tags);
+// defaulting values
+const { menu = [], starterMenu: starters = [] } = restaurant
+console.log(menu, starters);
 
+// mutating variables
+let a = 111
+let b = 999
+let obj = { a: 23, b: 7, c: 14 }
+    ({ a, b } = obj)
+console.log(obj);
+// nested objects
+const { fri: { open, close } } = openingHours
+console.log(fri);
 
+// destructuring arrays---------------
+// const arr = [2, 3, 4]
+// const a = arr[0]
+// const b = arr[1]
+// const c = arr[2]
+
+// const [x, y, z] = arr
+// console.log(x, y, z);
+// console.log(arr);
+
+// let [main, secondary] = restaurant.categories
+// console.log(main, secondary);
+
+// // switching variables
+// // const temp=main
+// // main = secondary
+// // secondary = temp
+// // console.log(main, secondary);
+
+// [main, secondary] = [secondary, main]
+// console.log(main, secondary);
+
+// // recieve 2 return values from a 
+// const [starter, mainCourse] = restaurant.order(2, 0)
+// console.log(starter, mainCourse);
+
+// const nested = [2, 4, [5, 6]]
+// // const [i, , j] = nested
+// const [i, , [j, k]] = nested
+// console.log(i, j);
+
+// const [p = 2, q = 1, r = 1] = [8, 9]
+// console.log(p, q, r);
