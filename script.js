@@ -1,101 +1,112 @@
-'use strict';
+const recordBtn = document.querySelector(".record"),
+  result = document.querySelector(".result"),
+  downloadBtn = document.querySelector(".download"),
+  inputLanguage = document.querySelector("#language"),
+  clearBtn = document.querySelector(".clear");
 
-// Data needed for a later exercise
-const flights =
-    '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+let SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition,
+  recognition,
+  recording = false;
 
-// Data needed for first part of the section
-const restaurant = {
-        name: 'Classico Italiano',
-        location: 'Via Angelo Tavanti 23, Firenze, Italy',
-        categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
-        starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
-        mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+function populateLanguages() {
+  languages.forEach((lang) => {
+    const option = document.createElement("option");
+    option.value = lang.code;
+    option.innerHTML = lang.name;
+    inputLanguage.appendChild(option);
+  });
+}
 
-        order: function(starterIndex, mainIndex) {
-            return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]]
-        },
+populateLanguages();
 
-        openingHours: {
-            thu: {
-                open: 12,
-                close: 22,
-            },
-            fri: {
-                open: 11,
-                close: 23,
-            },
-            sat: {
-                open: 0, // Open 24 hours
-                close: 24,
-            },
-        },
-        orderDelivery: function(starterIndex, mainIndex, time, address) {
-                console.log(`order recieved! ${this.starterMenu[starterIndex]`} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time});
-    },
+function speechToText() {
+  try {
+    recognition = new SpeechRecognition();
+    recognition.lang = inputLanguage.value;
+    recognition.interimResults = true;
+    recordBtn.classList.add("recording");
+    recordBtn.querySelector("p").innerHTML = "Listening...";
+    recognition.start();
+    recognition.onresult = (event) => {
+      const speechResult = event.results[0][0].transcript;
+      //detect when intrim results
+      if (event.results[0].isFinal) {
+        result.innerHTML += " " + speechResult;
+        result.querySelector("p").remove();
+      } else {
+        //creative p with class interim if not already there
+        if (!document.querySelector(".interim")) {
+          const interim = document.createElement("p");
+          interim.classList.add("interim");
+          result.appendChild(interim);
+        }
+        //update the interim p with the speech result
+        document.querySelector(".interim").innerHTML = " " + speechResult;
+      }
+      downloadBtn.disabled = false;
+    };
+    recognition.onspeechend = () => {
+      speechToText();
+    };
+    recognition.onerror = (event) => {
+      stopRecording();
+      if (event.error === "no-speech") {
+        alert("No speech was detected. Stopping...");
+      } else if (event.error === "audio-capture") {
+        alert(
+          "No microphone was found. Ensure that a microphone is installed."
+        );
+      } else if (event.error === "not-allowed") {
+        alert("Permission to use microphone is blocked.");
+      } else if (event.error === "aborted") {
+        alert("Listening Stopped.");
+      } else {
+        alert("Error occurred in recognition: " + event.error);
+      }
+    };
+  } catch (error) {
+    recording = false;
 
-};
-restaurant.orderDelivery({
-    time: `22: 30`,
-    address: `via del sole, 21`,
-    mainIndex: 2,
-    starterIndex: 2,
-})
+    console.log(error);
+  }
+}
 
-const { name1, openingHours, categories } = restaurant
-console.log(name, openingHours, categories);
+recordBtn.addEventListener("click", () => {
+  if (!recording) {
+    speechToText();
+    recording = true;
+  } else {
+    stopRecording();
+  }
+});
 
-const {
-    name: restaurantName,
-    openingHours: hours,
-    categories: tags
-} = restaurant
+function stopRecording() {
+  recognition.stop();
+  recordBtn.querySelector("p").innerHTML = "Start Listening";
+  recordBtn.classList.remove("recording");
+  recording = false;
+}
 
-console.log(restaurantName, hours, tags);
-// defaulting values
-const { menu = [], starterMenu: starters = [] } = restaurant
-console.log(menu, starters);
+function download() {
+  const text = result.innerText;
+  const filename = "speech.txt";
 
-// mutating variables
-let a = 111
-let b = 999
-let obj = { a: 23, b: 7, c: 14 }
-    ({ a, b } = obj)
-console.log(obj);
-// nested objects
-const { fri: { open, close } } = openingHours
-console.log(fri);
+  const element = document.createElement("a");
+  element.setAttribute(
+    "href",
+    "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+  );
+  element.setAttribute("download", filename);
+  element.style.display = "none";
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+}
 
-// destructuring arrays---------------
-// const arr = [2, 3, 4]
-// const a = arr[0]
-// const b = arr[1]
-// const c = arr[2]
+downloadBtn.addEventListener("click", download);
 
-// const [x, y, z] = arr
-// console.log(x, y, z);
-// console.log(arr);
-
-// let [main, secondary] = restaurant.categories
-// console.log(main, secondary);
-
-// // switching variables
-// // const temp=main
-// // main = secondary
-// // secondary = temp
-// // console.log(main, secondary);
-
-// [main, secondary] = [secondary, main]
-// console.log(main, secondary);
-
-// // recieve 2 return values from a 
-// const [starter, mainCourse] = restaurant.order(2, 0)
-// console.log(starter, mainCourse);
-
-// const nested = [2, 4, [5, 6]]
-// // const [i, , j] = nested
-// const [i, , [j, k]] = nested
-// console.log(i, j);
-
-// const [p = 2, q = 1, r = 1] = [8, 9]
-// console.log(p, q, r);
+clearBtn.addEventListener("click", () => {
+  result.innerHTML = "";
+  downloadBtn.disabled = true;
+});
